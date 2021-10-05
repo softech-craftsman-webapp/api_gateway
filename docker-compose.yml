@@ -8,10 +8,8 @@ services:
             - .:/build
         networks:
             - nginx
-        environment:
-            - PORT=80
-            - HOSTNAME=proxy_gateway
-            - NODE_ENV=production
+        env_file:
+            - ./.env
 
     nginx:
         image: nginx:alpine

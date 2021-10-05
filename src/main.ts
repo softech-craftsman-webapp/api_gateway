@@ -3,14 +3,21 @@
 // tslint:disable-next-line: no-var-requires
 const { router, server } = require('0http')();
 import { options, proxy } from './proxy';
+import { join } from 'path';
+import * as dotenv from "dotenv";
+
+/**
+ * Load environment variables from .env file
+ */
+dotenv.config({ path: join(__dirname, "/../../.env")});
 
 /*
 |---------------------------
 | Routing (server)
 |---------------------------
 */
-const FILE_SERVICE_URL = 'http://127.0.0.1:5000'
-const AUTH_SERVICE_URL = 'http://127.0.0.1:8080'
+const FILE_SERVICE_URL = process.env.FILE_SERVICE_URL;
+const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL;
 
 /*
 |---------------------------
@@ -54,8 +61,8 @@ router.all('/users/*', (req: any, res: any) => {
 | Starting
 |---------------------------
 */
-server.listen(80, '0.0.0.0', () => {
-  console.log('API Gateway has been started...');
+server.listen(process.env.PORT, process.env.IP, () => {
+  console.log(`API Gateway has been started on port ${process.env.PORT}...`);
 });
 
 /*
