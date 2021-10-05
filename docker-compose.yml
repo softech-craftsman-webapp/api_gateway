@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+    proxy_gateway:
+        restart: always
+        build: .
+        volumes:
+            - .:/build
+        networks:
+            - nginx
+        environment:
+            - PORT=80
+            - HOSTNAME=proxy_gateway
+            - NODE_ENV=production
+
+    nginx:
+        image: nginx:alpine
+        restart: always
+        ports:
+            - "80:80"
+        networks:
+            - nginx
+        volumes:
+            - ./config/nginx.conf:/etc/nginx/conf.d/default.conf
+        links:
+            - proxy_gateway
+        depends_on:
+            - proxy_gateway
+
+networks:
+    nginx:
+        driver: bridge
