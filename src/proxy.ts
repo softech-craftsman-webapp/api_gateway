@@ -49,8 +49,19 @@ proxy.on('error', (_err, _req, res) => {
 |---------------------------
 */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-proxy.on('proxyReq', (_proxyReq, _req, _res, _options)  => {
-  /// ... some analytics
+proxy.on('proxyReq', (_proxyReq, _req, res, _options)  => {
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, HEAD, GET, PUT, POST, DELETE');
+
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Request-ID,X-Requested-With,content-type,Authorization,Accept,Origin');
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
 });
 
 export { options, proxy };
