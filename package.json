@@ -2,9 +2,6 @@
   "name": "proxy_gateway",
   "version": "0.1.0",
   "description": "API Gateway (Proxy)",
-  "engines": {
-    "node": ">= 14.16 <15"
-  },
   "devDependencies": {
     "@types/jest": "~26.0.23",
     "@types/node": "~14.14.45",
