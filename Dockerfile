@@ -18,6 +18,9 @@ ENV NODE_ENV production
 
 # Starting the pm2 process and keeping the docker container alive
 RUN npm run build
-RUN NODE_ENV=production pm2 start process.yml -i max && tail -f /dev/null
+
+# Start PM2
+CMD ["pm2-runtime", "process.yml"]
+
 # Exposing the RestAPI port
 EXPOSE 80
