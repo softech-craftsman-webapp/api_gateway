@@ -16,7 +16,7 @@ dotenv.config({ path: join(__dirname, "/../../.env")});
 | Cors Origin Resource Sharing
 |---------------------------
 */
-server.use((_req:any, res:any, next:any) => {
+router.use((_req:any, res:any, next:any) => {
 
   // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', '*');
