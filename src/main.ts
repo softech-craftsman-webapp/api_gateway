@@ -18,13 +18,15 @@ dotenv.config({ path: join(__dirname, "/../../.env")});
 */
 const FILE_SERVICE_URL = process.env.FILE_SERVICE_URL;
 const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL;
+const MAIN_API_SERVICE_URL = process.env.MAIN_API_SERVICE_URL;
 
 /*
 |---------------------------
 | File Service
-| endpoint: /files
 |---------------------------
 */
+
+// endpoint: /files
 router.all('/files/*', (req: any, res: any) => {
   proxy.web(req, res, {
     ...options,
@@ -35,11 +37,10 @@ router.all('/files/*', (req: any, res: any) => {
 /*
 |---------------------------
 | Auth Service
-| endpoint: /auth
 |---------------------------
 */
 
-// endpoint :/auth
+// endpoint: /auth
 router.all('/auth/*', (req: any, res: any) => {
   proxy.web(req, res, {
     ...options,
@@ -55,6 +56,60 @@ router.all('/users/*', (req: any, res: any) => {
   });
 });
 
+
+/*
+|---------------------------
+| Main API
+|---------------------------
+*/
+
+// endpoint: /categories
+router.all('/categories/*', (req: any, res: any) => {
+  proxy.web(req, res, {
+    ...options,
+    target: `${MAIN_API_SERVICE_URL}`
+  });
+});
+
+// endpoint :/jobs
+router.all('/jobs/*', (req: any, res: any) => {
+  proxy.web(req, res, {
+    ...options,
+    target: `${MAIN_API_SERVICE_URL}`
+  });
+});
+
+// endpoint :/locations
+router.all('/locations/*', (req: any, res: any) => {
+  proxy.web(req, res, {
+    ...options,
+    target: `${MAIN_API_SERVICE_URL}`
+  });
+});
+
+// endpoint :/locations
+router.all('/ratings/*', (req: any, res: any) => {
+  proxy.web(req, res, {
+    ...options,
+    target: `${MAIN_API_SERVICE_URL}`
+  });
+});
+
+// endpoint :/transactions
+router.all('/transactions/*', (req: any, res: any) => {
+  proxy.web(req, res, {
+    ...options,
+    target: `${MAIN_API_SERVICE_URL}`
+  });
+});
+
+// endpoint :/user-details
+router.all('/user-details/*', (req: any, res: any) => {
+  proxy.web(req, res, {
+    ...options,
+    target: `${MAIN_API_SERVICE_URL}`
+  });
+});
 
 /*
 |---------------------------

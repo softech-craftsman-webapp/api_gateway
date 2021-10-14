@@ -1,7 +1,7 @@
 apps:
     - script:  build/src/main.js
       name: proxy_gateway
-      instances: 8
+      instances: 4
       exec_mode: cluster
       env:
         NODE_ENV: production
