@@ -8,7 +8,8 @@ WORKDIR /app
 ADD . /app
 
 # Installing the project dependencies
-RUN npm install
+npm config set legacy-peer-deps true
+npm install --save --legacy-peer-deps
 RUN npm install pm2 -g
 RUN npm audit fix
 
