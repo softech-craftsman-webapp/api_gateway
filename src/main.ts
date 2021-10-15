@@ -1,10 +1,34 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
-// tslint:disable-next-line: no-var-requires
-const { router, server } = require('0http')();
+import express, {Request, Response} from 'express'
 import { options, proxy } from './proxy';
 import { join } from 'path';
 import * as dotenv from "dotenv";
+import cors from "cors";
+import helmet from "helmet";
+import timeout from "connect-timeout";
+import compression from "compression";
+
+/*
+|---------------------------
+| Application initialization
+|---------------------------
+*/
+const app = express();
+app.disable('x-powered-by');
+app.set('trust proxy', 1)
+app.set('json spaces', 40);
+app.use(timeout('60s'));
+app.use(cors());
+app.use(helmet.dnsPrefetchControl());
+app.use(helmet.expectCt());
+app.use(helmet.frameguard());
+app.use(helmet.hidePoweredBy());
+app.use(helmet.hsts());
+app.use(helmet.ieNoOpen());
+app.use(helmet.noSniff());;
+app.use(helmet.xssFilter());
+app.use(helmet.permittedCrossDomainPolicies());
+app.use(helmet.referrerPolicy());
+app.use(compression());
 
 /**
  * Load environment variables from .env file
@@ -27,7 +51,7 @@ const MAIN_API_SERVICE_URL = process.env.MAIN_API_SERVICE_URL;
 */
 
 // endpoint: /files
-router.all('/files/*', (req: any, res: any) => {
+app.all('/files/*', (req: Request, res: Response) => {
   proxy.web(req, res, {
     ...options,
     target: `${FILE_SERVICE_URL}`
@@ -41,7 +65,7 @@ router.all('/files/*', (req: any, res: any) => {
 */
 
 // endpoint: /auth
-router.all('/auth/*', (req: any, res: any) => {
+app.all('/auth/*', (req: Request, res: Response) => {
   proxy.web(req, res, {
     ...options,
     target: `${AUTH_SERVICE_URL}`
@@ -49,7 +73,7 @@ router.all('/auth/*', (req: any, res: any) => {
 });
 
 // endpoint :/users
-router.all('/users/*', (req: any, res: any) => {
+app.all('/users/*', (req: Request, res: Response) => {
   proxy.web(req, res, {
     ...options,
     target: `${AUTH_SERVICE_URL}`
@@ -64,7 +88,7 @@ router.all('/users/*', (req: any, res: any) => {
 */
 
 // endpoint: /categories
-router.all('/categories/*', (req: any, res: any) => {
+app.all('/categories/*', (req: Request, res: Response) => {
   proxy.web(req, res, {
     ...options,
     target: `${MAIN_API_SERVICE_URL}`
@@ -72,7 +96,7 @@ router.all('/categories/*', (req: any, res: any) => {
 });
 
 // endpoint :/jobs
-router.all('/jobs/*', (req: any, res: any) => {
+app.all('/jobs/*', (req: Request, res: Response) => {
   proxy.web(req, res, {
     ...options,
     target: `${MAIN_API_SERVICE_URL}`
@@ -80,7 +104,7 @@ router.all('/jobs/*', (req: any, res: any) => {
 });
 
 // endpoint :/locations
-router.all('/locations/*', (req: any, res: any) => {
+app.all('/locations/*', (req: Request, res: Response) => {
   proxy.web(req, res, {
     ...options,
     target: `${MAIN_API_SERVICE_URL}`
@@ -88,7 +112,7 @@ router.all('/locations/*', (req: any, res: any) => {
 });
 
 // endpoint :/locations
-router.all('/ratings/*', (req: any, res: any) => {
+app.all('/ratings/*', (req: Request, res: Response) => {
   proxy.web(req, res, {
     ...options,
     target: `${MAIN_API_SERVICE_URL}`
@@ -96,7 +120,7 @@ router.all('/ratings/*', (req: any, res: any) => {
 });
 
 // endpoint :/transactions
-router.all('/transactions/*', (req: any, res: any) => {
+app.all('/transactions/*', (req: Request, res: Response) => {
   proxy.web(req, res, {
     ...options,
     target: `${MAIN_API_SERVICE_URL}`
@@ -104,7 +128,7 @@ router.all('/transactions/*', (req: any, res: any) => {
 });
 
 // endpoint :/user-details
-router.all('/user-details/*', (req: any, res: any) => {
+app.all('/user-details/*', (req: Request, res: Response) => {
   proxy.web(req, res, {
     ...options,
     target: `${MAIN_API_SERVICE_URL}`
@@ -116,7 +140,7 @@ router.all('/user-details/*', (req: any, res: any) => {
 | Starting
 |---------------------------
 */
-server.listen(process.env.PORT, process.env.IP, () => {
+const server = app.listen(parseInt(process.env.PORT, 10), process.env.IP, () => {
   console.log(`API Gateway has been started on port ${process.env.PORT}...`);
 });
 
@@ -126,8 +150,8 @@ server.listen(process.env.PORT, process.env.IP, () => {
 |---------------------------
 */
 process.on('SIGTERM', () => {
-  console.log('API Gateway service has been closed...');
   server.close(() => {
+    console.log('API Gateway service has been closed...');
     proxy.close();
-  });
+  })
 });
