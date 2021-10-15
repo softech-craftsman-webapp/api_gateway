@@ -17,7 +17,24 @@ app.disable('x-powered-by');
 app.set('trust proxy', 1)
 app.set('json spaces', 40);
 app.use(timeout('60s'));
-app.use(cors());
+app.use(cors({
+  'allowedHeaders': [
+    'Access-Control-Allow-Headers',
+    'Access-Control-Allow-Headers',
+    'Access-Control-Allow-Origin',
+    'X-Request-ID',
+    'X-Requested-With',
+    'Content-Type',
+    'Authorization',
+    'Accept',
+    'Origin',
+    'Access-Control-Max-Age'
+  ],
+  'exposedHeaders': ['X-Request-ID'],
+  'origin': '*',
+  'methods': 'GET,HEAD,PUT,POST,DELETE',
+  'preflightContinue': false
+}));
 app.use(helmet.dnsPrefetchControl());
 app.use(helmet.expectCt());
 app.use(helmet.frameguard());
