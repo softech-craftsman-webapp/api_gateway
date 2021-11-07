@@ -152,6 +152,14 @@ app.all('/user-details/*', (req: Request, res: Response) => {
   });
 });
 
+// endpoint :/contracts
+app.all('/contracts/*', (req: Request, res: Response) => {
+  proxy.web(req, res, {
+    ...options,
+    target: `${MAIN_API_SERVICE_URL}`
+  });
+});
+
 /*
 |---------------------------
 | Starting
