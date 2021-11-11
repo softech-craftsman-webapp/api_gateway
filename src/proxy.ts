@@ -35,12 +35,16 @@ const proxy = httpProxy.createProxyServer(options);
 | Error with plugin
 |---------------------------
 */
-proxy.on('error', (_err, _req, res) => {
+proxy.on('error', (err, _req, res) => {
   res.writeHead(500, {
-    'Content-Type': 'text/plain'
+    'Content-Type': 'application/json'
   });
 
-  res.end();
+  res.end(JSON.stringify({
+    success: false,
+    message: err.message,
+    payload: null
+  }));
 });
 
 /*

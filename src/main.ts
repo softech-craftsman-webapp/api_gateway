@@ -160,12 +160,20 @@ app.all('/contracts/*', (req: Request, res: Response) => {
   });
 });
 
+// endpoint :/statistics
+app.all('/statistics/*', (req: Request, res: Response) => {
+  proxy.web(req, res, {
+    ...options,
+    target: `${MAIN_API_SERVICE_URL}`
+  });
+});
+
 /*
 |---------------------------
 | Starting
 |---------------------------
 */
-const server = app.listen(parseInt(process.env.PORT, 10), process.env.IP, () => {
+const server = app.listen(Number(process.env.PORT), process.env.IP, () => {
   console.log(`API Gateway has been started on port ${process.env.PORT}...`);
 });
 
