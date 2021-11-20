@@ -1,3 +1,0 @@
-describe('TestCase', () => {
-  // Simple testing
-});

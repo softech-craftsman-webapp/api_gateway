@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "description": "API Gateway (Proxy)",
   "devDependencies": {
+    "@babel/preset-typescript": "^7.16.0",
+    "@types/axios": "^0.14.0",
     "@types/express": "^4.17.13",
-    "@types/jest": "~26.0.23",
+    "@types/jest": "^27.0.3",
     "@types/node": "~14.14.45",
     "@typescript-eslint/eslint-plugin": "~4.25.0",
     "@typescript-eslint/parser": "~4.25.0",
+    "axios": "^0.24.0",
     "eslint": "~7.27.0",
     "eslint-config-prettier": "~8.3.0",
     "eslint-plugin-jest": "~24.3.6",
@@ -49,5 +52,15 @@
   },
   "volta": {
     "node": "14.16.1"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "transform": {
+      "node_modules/variables/.+\\.(j|t)sx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!variables/.*)"
+    ]
   }
 }
