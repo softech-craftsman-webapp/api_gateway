@@ -1,4 +1,4 @@
-name: Api Gateway Test
+name: Test (Api Gateway)
 
 on: [push]
 
