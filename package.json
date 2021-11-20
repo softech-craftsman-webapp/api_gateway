@@ -59,5 +59,8 @@
     "transformIgnorePatterns": [
       "node_modules/(?!variables/.*)"
     ]
+  },
+  "volta": {
+    "node": "14.16.1"
   }
 }

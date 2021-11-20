@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Api Gateway Test
 
 on: [push]
 
@@ -14,6 +14,7 @@ jobs:
       - run: yarn
       - run: yarn test
         env:
+          # Testing Environment (Without firewall)
           FILE_SERVICE_URL: "http://143.244.204.177"
           AUTH_SERVICE_URL: "http://165.232.72.179"
           MAIN_API_SERVICE_URL: "http://174.138.102.12"
