@@ -50,9 +50,6 @@
     "path": "^0.12.7",
     "tslib": "~2.2.0"
   },
-  "volta": {
-    "node": "14.16.1"
-  },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
