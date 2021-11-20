@@ -13,20 +13,7 @@ jobs:
           node-version: 12
       - run: yarn
       - run: yarn test
-          env:
-            FILE_SERVICE_URL: "http://143.244.204.177"
-            AUTH_SERVICE_URL: "http://165.232.72.179"
-            MAIN_API_SERVICE_URL: "http://174.138.102.12"
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: volta-cli/action@v1
-      - run: npm ci --no-audit
-      - run: npm run lint --if-present
-      - run: npm run build --if-present
         env:
-          CI: true
+          FILE_SERVICE_URL: "http://143.244.204.177"
+          AUTH_SERVICE_URL: "http://165.232.72.179"
+          MAIN_API_SERVICE_URL: "http://174.138.102.12"
