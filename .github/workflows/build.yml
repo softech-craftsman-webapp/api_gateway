@@ -37,3 +37,5 @@ jobs:
         FILE_SERVICE_URL: "http://143.244.204.177"
         AUTH_SERVICE_URL: "http://165.232.72.179"
         MAIN_API_SERVICE_URL: "http://174.138.102.12"
+        IP: "127.0.0.1"
+        PORT: "8080"
