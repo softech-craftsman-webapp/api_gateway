@@ -15,4 +15,15 @@ async function MainApiDocs(): Promise<any> {
   return response
 }
 
-export { MainApiDocs };
+/**
+ * Main API Service
+ * path : /auth/public-key
+ * method : GET
+ * description : Get the public key
+ */
+ async function PublicKey(): Promise<any> {
+  const response = await axios.get(`${BASE_PATH}/auth/public-key`);
+  return response
+}
+
+export { MainApiDocs, PublicKey };
