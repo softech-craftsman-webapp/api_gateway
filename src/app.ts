@@ -32,7 +32,7 @@ app.use(cors({
   ],
   'exposedHeaders': ['X-Request-ID'],
   'origin': '*',
-  'methods': 'GET,HEAD,PUT,POST,DELETE',
+  'methods': 'GET,HEAD,PUT,POST,DELETE,OPTIONS',
   'preflightContinue': false
 }));
 app.use(helmet.dnsPrefetchControl());
